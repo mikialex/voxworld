@@ -1,3 +1,5 @@
-let a = 1;
-let b = 233;
-console.log('ddddddsfs')
+import { canvas2dRenderer } from './renderer/canvas2d-renderer'
+console.log('vox world welcomed')
+
+let testCanvas = new canvas2dRenderer(document.getElementById("canvas"))
+
