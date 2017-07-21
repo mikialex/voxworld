@@ -7,11 +7,3 @@ export class worldBlock{
 
   }
 }
-
-export class blockCollection{
-  collection:worldBlock[]
-  constructor(){
-
-  }
-
-}

@@ -7,6 +7,10 @@ var APP_PATH = path.resolve(ROOT_PATH, 'src');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'dist');
 var TEM_PATH = path.resolve(ROOT_PATH, '');
 
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
+}
+
 module.exports = {
   entry: {
     app: path.resolve(APP_PATH, 'index.ts'),
@@ -18,7 +22,9 @@ module.exports = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
-    alias: {}
+    alias: {
+      // '@': resolve('src'),
+    }
   },
   // // enable dev source map
   // devtool: 'eval-source-map',
