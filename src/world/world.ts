@@ -1,9 +1,33 @@
-class sector{
-  id: number;
+
+export class sector{
+  public worldx: number;
+  public worldy: number;
   map: Array<Array<Array<number>>>;
+  constructor() {
+    
+  }
+  
+  /**
+   * setBlock
+   */
+  public setBlock() {
+    
+  }
+
+  public exportSector(){
+
+  }
+  
 }
 
+// let testWorlds=[
+//   []
+// ]
 
-class voxWorld{
-  map: Array<Array<sector>>;
+
+export class voxWorld{
+  map: Array<sector>;
+  constructor() {
+    
+  }
 }

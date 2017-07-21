@@ -1,13 +1,21 @@
 {
   "name": "voxworld",
   "version": "0.0.1",
-  "description": "lets create a world",
+  "description": "voxworld is an vox-like sandbox world engine.",
   "main": "index.js",
   "scripts": {
     "start": "webpack --config webpack.config.js",
     "dev":"node_modules/.bin/webpack-dev-server --port 9090 --open"
   },
-  "author": "mkalex",
+  "keywords": [
+    "vox",
+    "game",
+    "engine",
+    "typescript",
+    "javascript",
+    "simple"
+  ],
+  "author": "mkalex 18516340862@163.com",
   "license": "ISC",
   "devDependencies": {
     "html-webpack-plugin": "^2.29.0",
@@ -15,5 +23,9 @@
     "typescript": "^2.4.1",
     "webpack": "^3.1.0",
     "webpack-dev-server": "^2.5.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mkalex/vox-world.git"
+  },
 }
