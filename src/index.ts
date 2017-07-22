@@ -1,10 +1,12 @@
 import { Canvas2dRenderer } from './renderer/canvas2d-renderer'
 // import { voxWorld } from './world/world'
 // import { camera } from './camera/camera'
-import { ResourcePool } from './resource-manage/resource-pool'
+
 import { Player } from './player'
 import { VoxGame } from './core/vox-game'
+import { VoxResource } from "./resource/resource-manage";
 
+import {voxMeta} from './assets/vox-meta'
 
 console.log('vox world welcomed')
 
@@ -13,11 +15,11 @@ let testCanvas = new Canvas2dRenderer(document.getElementById("canvas"))
 
 //load resourses
 //resoure is kind of surface that can be changed by user
-let resourcePool = new ResourcePool();
+let voxResource = new VoxResource(voxMeta);
 
 //load player info and setting
 let player = new Player();
 
 //initalize game
-let game = new VoxGame(testCanvas, resourcePool, player)
-
+let game = new VoxGame(testCanvas, voxResource, player)
+game.start();

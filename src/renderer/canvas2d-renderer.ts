@@ -4,19 +4,21 @@ interface squareFace{
   x1: number;y1: number;x2: number;y2: number;
   x3: number;y3: number;x4: number;y4: number;
 }
-interface Point{
-  x: number; y: number;
-}
 
 export class Canvas2dRenderer implements IRenderable{
   element: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
   devicePixelRatio: number;
+  width: number;
+  height: number;
+
+
   constructor(canvas: HTMLElement) {
     this.devicePixelRatio = window.devicePixelRatio || 1;
     this.element = <HTMLCanvasElement>canvas;
     this.ctx = this.element.getContext("2d");
-
+    this.width = this.element.width;
+    this.height = this.element.height;
   }
   render() {
     console.log('rendering')
@@ -39,16 +41,24 @@ export class Canvas2dRenderer implements IRenderable{
     this.ctx.fill();
   }
 
-  drawLine(color: string, point1: Point, point2: Point) {
+  drawLine(color: string, x1:number,y1:number,x2:number,y2:number) {
     this.ctx.strokeStyle = color;
     this.ctx.beginPath();
-    this.ctx.moveTo(point1.x,point1.y);
-    this.ctx.lineTo(point2.x,point2.y);
+    this.ctx.moveTo(x1,y1);
+    this.ctx.lineTo(x2, y2);
+    this.ctx.closePath();
+    this.ctx.stroke();
   }
 
   fillRect(color: string, x: number, y: number, width: number, height: number) {
     this.ctx.fillStyle = color;
     this.ctx.fillRect(x, y, width, height)
+  }
+
+  fillCircle(color: string, x: number, y: number, r: number) {
+    this.ctx.fillStyle = color;
+    this.ctx.arc(x, y, r, 0, 2 * Math.PI, true);
+    this.ctx.fill();
   }
 
 }

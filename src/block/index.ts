@@ -1,12 +1,12 @@
-import { SimpleBlock } from './simple-block'
+import { Block } from "./block-base";
 
-export class BlockCollection{ 
+export class BlockCollection{
   constructor(){
     this.collection = [];
   }
-  collection: SimpleBlock[]
+  collection: Block[]
   
-  addBlock(block:SimpleBlock) {
+  addBlock(block:Block) {
     this.collection.push(block)
   }
 
