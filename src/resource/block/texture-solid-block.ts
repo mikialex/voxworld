@@ -1,10 +1,9 @@
-import { IDrawable } from '../interface/IDrawable'
-import { Canvas2dRenderer } from '../renderer/canvas2d-renderer'
 import { SolidBlock } from "./solid-block";
+import { Canvas2dRenderer } from "../../renderer/canvas2d-renderer";
 
 export class TextureSolidBlock extends SolidBlock {
-  constructor() {
-    super()
+  constructor(name: string, option: any) {
+    super(name,option)
   }
   color: string = '#6bca63';
   darkerColor: string = '#63a05e';

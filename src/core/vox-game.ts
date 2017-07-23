@@ -3,9 +3,7 @@ import { VoxResource } from "../resource/resource-manage";
 import { Player } from '../player'
 import { World } from '../world/world'
 
-import { BlockCollection } from '../block'
 
-import { SolidBlock } from '../block/solid-block'
 
 export class VoxGame {
   constructor(renderer: Canvas2dRenderer, resource: VoxResource, player: Player) {

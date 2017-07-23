@@ -1,4 +1,3 @@
-import { BlockCollection } from '../block'
 import { Canvas2dRenderer } from '../renderer/canvas2d-renderer'
 import { IDrawable } from "../interface/IDrawable";
 import { Sector } from "./sector";
@@ -15,7 +14,7 @@ export class World {
   }
 
   initalizeWorld() {
-    this.resource.voxWorldMap.forEach((sec:any) => {
+    this.resource.voxMetaInfo.voxWorldMap.forEach((sec:any) => {
       let sector = new Sector(this.resource, sec.x, sec.y, sec.map);
       this.map.push(sector);
     })

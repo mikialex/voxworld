@@ -1,4 +1,4 @@
-import { BlockCollection } from '../block'
+import { BlockCollection } from '../resource/block/block-collection'
 import { Canvas2dRenderer } from '../renderer/canvas2d-renderer'
 import { IDrawable } from "../interface/IDrawable";
 import { VoxResource } from "../resource/resource-manage";

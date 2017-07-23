@@ -1,13 +1,15 @@
-import { SolidBlock } from '../block/solid-block'
-import { BlockCollection } from "../block/index";
+import { TextureCollection } from "./texture/texture-collection";
+import { BlockCollection } from "./block/block-collection";
+import { SolidBlock } from "./block/solid-block";
 
 
 export class VoxResource {
   constructor(voxMetaInfo: any) {
+    console.info('metaInfo:',voxMetaInfo);
     this.voxMetaInfo = voxMetaInfo;
-    this.voxWorldMap = voxMetaInfo.voxWorldMap;
     this.initalizeBlockCollection();
 
+    this.textureCollection=new TextureCollection(voxMetaInfo.blockTextureMetaInfo)
   }
 
   initalizeBlockCollection() {
@@ -27,12 +29,14 @@ export class VoxResource {
       blocks.addBlock(block);
     });
     this.blockCollection = blocks;
-    console.log(this.blockCollection)
   }
 
+ /**
+ * store the meta object of game metainfo, which defined in assets/vox-meta.
+ */
   voxMetaInfo: any;
-  voxWorldMap: any;
 
+  textureCollection: TextureCollection;
   blockCollection: BlockCollection;
 
 }
