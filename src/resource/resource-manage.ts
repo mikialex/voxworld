@@ -1,40 +1,28 @@
 import { TextureCollection } from "./texture/texture-collection";
 import { BlockCollection } from "./block/block-collection";
-import { SolidBlock } from "./block/solid-block";
+import { ILoadable } from "../interface/ILoadable";
 
 
-export class VoxResource {
+export class VoxResource implements ILoadable {
   constructor(voxMetaInfo: any) {
-    console.info('metaInfo:',voxMetaInfo);
+    console.info('metaInfo:', voxMetaInfo);
     this.voxMetaInfo = voxMetaInfo;
-    this.initalizeBlockCollection();
-
-    this.textureCollection=new TextureCollection(voxMetaInfo.blockTextureMetaInfo)
+    this.textureCollection = new TextureCollection(voxMetaInfo.blockTextureMetaInfo)
+    this.blockCollection = new BlockCollection(voxMetaInfo.blockMetaInfo)
   }
 
-  initalizeBlockCollection() {
-    let blocks = new BlockCollection();
-    let voidBlock = new SolidBlock('void', {});
-    blocks.addBlock(voidBlock);
-    this.voxMetaInfo.blockMetaInfo.forEach((blockConfig: any) => {
-      let block;
-      switch (blockConfig.type) {
-        case 'solid':
-          block = new SolidBlock(blockConfig.name, blockConfig.option);
-          break;
-
-        default:
-          break;
-      }
-      blocks.addBlock(block);
-    });
-    this.blockCollection = blocks;
-  }
-
- /**
- * store the meta object of game metainfo, which defined in assets/vox-meta.
- */
+  /**
+  * store the meta object of game metainfo, which defined in assets/vox-meta.
+  */
   voxMetaInfo: any;
+
+  load() {
+    return new Promise(() => {
+
+    })
+  }
+
+  hasLoaded: boolean;
 
   textureCollection: TextureCollection;
   blockCollection: BlockCollection;

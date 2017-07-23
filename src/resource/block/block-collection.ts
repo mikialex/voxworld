@@ -1,12 +1,33 @@
-import { Block } from "./block-base";
+import { BlockBase } from "./block-base";
+import { SolidBlock } from "./solid-block";
 
 export class BlockCollection{
-  constructor(){
+  constructor(metaInfo: any) {
+    this.metaInfo = metaInfo;
     this.collection = [];
+
+    let voidBlock = new SolidBlock('void', {});
+    this.addBlock(voidBlock);
+
+    metaInfo.forEach((blockConfig: any) => {
+      let block;
+      switch (blockConfig.type) {
+        case 'solid':
+          block = new SolidBlock(blockConfig.name, blockConfig.option);
+          break;
+
+        default:
+          break;
+      }
+      this.addBlock(block);
+    });
+
   }
-  collection: Block[]
+
+  metaInfo: any;
+  collection: BlockBase[]
   
-  addBlock(block:Block) {
+  addBlock(block:BlockBase) {
     this.collection.push(block)
   }
 

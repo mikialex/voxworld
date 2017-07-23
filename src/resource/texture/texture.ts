@@ -22,6 +22,7 @@ export class Texture implements ILoadable {
   }
 
   hasLoaded: boolean = false;
+  
   url: string = "";
   image: HTMLImageElement;
 }

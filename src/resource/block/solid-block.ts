@@ -1,7 +1,7 @@
-import { Block } from "./block-base";
+import { BlockBase } from "./block-base";
 import { Canvas2dRenderer } from "../../renderer/canvas2d-renderer";
 
-export class SolidBlock extends Block {
+export class SolidBlock extends BlockBase {
   constructor(name: string, option: any) {
     super(name, option);
     this.color = option.color || '#888';
