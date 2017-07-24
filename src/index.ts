@@ -10,16 +10,23 @@ import {voxMeta} from './assets/vox-meta'
 
 console.log('vox world welcomed')
 
-//set renderBankend and render element
-let testCanvas = new Canvas2dRenderer(document.getElementById("canvas"))
 
 //load resourses
 //resoure is kind of surface that can be changed by user
 let voxResource = new VoxResource(voxMeta);
+
+//set renderBankend and render element
+let testCanvas = new Canvas2dRenderer(document.getElementById("canvas"),voxResource)
 
 //load player info and setting
 let player = new Player();
 
 //initalize game
 let game = new VoxGame(testCanvas, voxResource, player)
+
+voxResource.load()
+  .then(m => {
+    game.testdraw();
+})
+
 game.start();

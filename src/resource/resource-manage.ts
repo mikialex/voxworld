@@ -17,9 +17,7 @@ export class VoxResource implements ILoadable {
   voxMetaInfo: any;
 
   load() {
-    return new Promise(() => {
-
-    })
+    return this.textureCollection.load();
   }
 
   hasLoaded: boolean;

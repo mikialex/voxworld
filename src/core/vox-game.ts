@@ -13,15 +13,19 @@ export class VoxGame {
     this.world =new World(resource);
     
     //test draw
-    this.world.draw(this.renderer, 50, 50);
-    this.world.drawSectorBoundaries(renderer, 50, 50);
-    this.world.drawWorldAxis(renderer, 50, 50);
+    
   }
 
   renderer: Canvas2dRenderer;
   world: World;
   private _RAFid: number;
   private _hasStarted: boolean = false;
+
+  testdraw() {
+    this.world.draw(this.renderer, 50, 50);
+    this.world.drawSectorBoundaries(this.renderer, 50, 50);
+    this.world.drawWorldAxis(this.renderer, 50, 50);
+  }
 
   start() {
     if (!this._hasStarted) {

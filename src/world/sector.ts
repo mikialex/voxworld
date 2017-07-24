@@ -7,15 +7,15 @@ import { Block } from "./block";
 
 
 export class Sector implements IDrawable{
-  constructor(blockCollection:VoxResource,x:number,y:number,map:Array<Array<number>>) {
-    this.resource = blockCollection;
+  constructor(resource:VoxResource,x:number,y:number,map:Array<Array<number>>) {
+    this.resource = resource;
     this.worldx = x;
     this.worldy = y;
     this.map = [];
     for (let i = 0; i < 4; i++) {
       let row = [];
       for (let j = 0; j < 4; j++) {
-        row.push(new Block(map[i][j]))
+        row.push(new Block(map[i][j],resource))
       }
       this.map.push(row);
     }
@@ -31,7 +31,7 @@ export class Sector implements IDrawable{
     // console.log(this.resource.blockCollection);
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
-        this.map[i][j].draw(renderer, x + j * 30, y + i * 30, this.resource);
+        this.map[i][j].draw(renderer, x + j * 30, y + i * 30);
       }
     }
   }

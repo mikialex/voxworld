@@ -1,4 +1,13 @@
 export let blockMetaInfo = [
+
+  {
+    type: 'textureSolid',
+    name: 'grass with texture',
+    option: {
+      topTexture: 0,
+      bottomTexture: 1,
+    }
+  },
   {
     type: 'solid',
     name: 'grass',
@@ -14,5 +23,5 @@ export let blockMetaInfo = [
       color: '#e8e89a',
       darkerColor:'#c1c17b'
     }
-  }
+  },
 ]

@@ -1,4 +1,5 @@
 import { IRenderable } from '../interface/IRenderable'
+import { VoxResource } from "../resource/resource-manage";
 
 interface squareFace{
   x1: number;y1: number;x2: number;y2: number;
@@ -12,13 +13,16 @@ export class Canvas2dRenderer implements IRenderable{
   width: number;
   height: number;
 
+  resource: VoxResource;
 
-  constructor(canvas: HTMLElement) {
+
+  constructor(canvas: HTMLElement, resource: VoxResource) {
     this.devicePixelRatio = window.devicePixelRatio || 1;
     this.element = <HTMLCanvasElement>canvas;
     this.ctx = this.element.getContext("2d");
     this.width = this.element.width;
     this.height = this.element.height;
+    this.resource = resource;
   }
   render() {
     console.log('rendering')
@@ -59,6 +63,10 @@ export class Canvas2dRenderer implements IRenderable{
     this.ctx.fillStyle = color;
     this.ctx.arc(x, y, r, 0, 2 * Math.PI, true);
     this.ctx.fill();
+  }
+
+  paintRectTexture(texture: number, x: number, y: number, width: number, height: number) {
+    this.ctx.drawImage(this.resource.textureCollection.collection[texture].image, x, y, width, height);
   }
 
 }

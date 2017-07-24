@@ -1,7 +1,8 @@
 import { BlockBase } from "./block-base";
 import { SolidBlock } from "./solid-block";
+import { TextureSolidBlock } from "./texture-solid-block";
 
-export class BlockCollection{
+export class BlockCollection {
   constructor(metaInfo: any) {
     this.metaInfo = metaInfo;
     this.collection = [];
@@ -15,7 +16,9 @@ export class BlockCollection{
         case 'solid':
           block = new SolidBlock(blockConfig.name, blockConfig.option);
           break;
-
+        case 'textureSolid':
+          block = new TextureSolidBlock(blockConfig.name, blockConfig.option);
+          break;
         default:
           break;
       }
@@ -26,8 +29,8 @@ export class BlockCollection{
 
   metaInfo: any;
   collection: BlockBase[]
-  
-  addBlock(block:BlockBase) {
+
+  addBlock(block: BlockBase) {
     this.collection.push(block)
   }
 
