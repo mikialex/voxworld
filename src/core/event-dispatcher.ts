@@ -1,16 +1,22 @@
 import { VoxEvent } from "./event";
 
+interface eventAction{
+
+}
+
 export class EventDispatcher {
   constructor(target: any) {
     this.target = target;
+    this.eventHandlers = {};
   }
 
-  eventHandlers: { [key: string]: { (event?: VoxEvent<any>): void }[]; }
+  // eventHandlers: { [key: string]: { (event?: VoxEvent<any>): void }[]; }
+  eventHandlers: { [key: string]: Array<any> }
   target: any;  
 
 
   emit(eventName: string, event?: VoxEvent<any>) {
-    console.log('event' + eventName + 'emit!')
+    console.log('event ' + eventName + ' emit!')
 
     //if event is empty
     if (!event) {
@@ -26,13 +32,16 @@ export class EventDispatcher {
     }
   }
 
-  
-  on(eventName: string) {
-    
+  on(eventName: string,action:any) {
+    this.eventHandlers[eventName].push(action);
   }
 
-  off(eventName: string) {
-    
+  off(eventName: string,action:any) {
+    this.eventHandlers[eventName] = this.eventHandlers[eventName].filter((actionitem) => {
+      return actionitem !== action;
+    })
   }
+
+
 
 }
