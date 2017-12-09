@@ -8,5 +8,5 @@ export interface IDrawable {
     * @param x    The x coordinate of where to draw
     * @param y    The y coordinate of where to draw
     */
-  draw(renderer: Canvas2dRenderer, x: number, y: number,resource?:VoxResource): void;
+  draw(renderer: Canvas2dRenderer, x: number, y: number, resource?: VoxResource): void;
 }

@@ -6,22 +6,24 @@ import { testmap } from '../assets/map/test-sectors'
 import { VoxResource } from "../resource/resource-manage";
 import {sectorWidth} from './sector'
 import { ReactiveBase } from '../core/reactive-base';
+import { VoxGame } from '../core/vox-game';
 
 export class World extends ReactiveBase implements IDrawable{
   map: Array<Sector> = [];
+  game: VoxGame;
   resource: VoxResource;
   screenx: number;
   screeny: number;
 
-  constructor(voxResource: VoxResource) {
-    super();
-    this.resource = voxResource;
-    this.initalizeWorld();
+  constructor(game: VoxGame,resource:VoxResource) {
+    super(game);
+    this.game = game;
+    this.resource = resource;
   }
 
   initalizeWorld() {
     this.resource.voxMetaInfo.voxWorldMap.forEach((sec:any) => {
-      let sector = new Sector(this.resource, sec.x, sec.y, sec.map);
+      let sector = new Sector(this.game,sec.x, sec.y, sec.map);
       this.map.push(sector);
     })
   }

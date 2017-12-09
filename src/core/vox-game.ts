@@ -3,19 +3,22 @@ import { VoxResource } from "../resource/resource-manage";
 import { Player } from '../player'
 import { World } from '../world/world'
 import { ReactiveBase } from './reactive-base';
+import { Camera } from '../camera/camera';
+import { InputHandler } from './input-handler';
 
 
 
 export class VoxGame extends ReactiveBase{
-  constructor(renderer: Canvas2dRenderer, resource: VoxResource, player: Player) {
+  constructor(renderer: Canvas2dRenderer, resource: VoxResource) {
     super();
     this.renderer = renderer;
     this.element = renderer.element;
-    this.element.addEventListener('click',(this.handleCanvasClick).bind(this))
-    this.element.addEventListener('mousemove',(this.handleCanvasMouseMove).bind(this))
+    this.inputHandler = new InputHandler(this.element); 
     //test load
-    this.world = new World(resource);
-    this.player = player;
+    this.world = new World(this, resource);
+    this.world.initalizeWorld();
+    this.camera = new Camera();
+    this.camera.lookAt(100, 100);
     
     //test draw
     
@@ -23,6 +26,8 @@ export class VoxGame extends ReactiveBase{
 
   element: HTMLCanvasElement;
   renderer: Canvas2dRenderer;
+  inputHandler: InputHandler;
+  camera: Camera;
   world: World;
   player: Player;
   private _RAFid: number;
@@ -34,20 +39,17 @@ export class VoxGame extends ReactiveBase{
     return 60 / (this.afterFrameTimeStamp - this.preFrameTimeStamp)
   }
 
-  handleCanvasClick(e:MouseEvent) {
-    console.log(e);
-    this.world.testClick(e.offsetX, e.offsetY)
+  addPlayer( player: Player) {
+    this.player = player;
   }
-  handleCanvasMouseMove(e: MouseEvent) {
-    // console.log(e);
-  }
+
 
   draw() {
     this.renderer.clear();
-    this.world.draw(this.renderer, 50, 50);
-    this.world.drawSectorBoundaries(this.renderer, 50, 50);
-    this.world.drawWorldAxis(this.renderer, 50, 50);
-    this.player.draw(this.renderer, 50, 50);
+    this.world.draw(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
+    this.world.drawSectorBoundaries(this.renderer,this.camera.lookAtX, this.camera.lookAtY);
+    this.world.drawWorldAxis(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
+    this.player.draw(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
   }
 
   start() {
@@ -69,6 +71,10 @@ export class VoxGame extends ReactiveBase{
     } else {
       console.log('game has already stoped')
     }
+  }
+
+  pointTest(x:number,y:number) {
+    return false;
   }
 
 

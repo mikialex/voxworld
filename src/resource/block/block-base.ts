@@ -1,7 +1,7 @@
 import { IDrawable } from "../../interface/IDrawable";
 import { Canvas2dRenderer } from "../../renderer/canvas2d-renderer";
 
-export abstract class BlockBase implements IDrawable {
+export abstract class BlockBase  {
   constructor(name:string,option:any) {
     this.name = name;
   }

@@ -4,22 +4,24 @@ import { IDrawable } from "../interface/IDrawable";
 import { VoxResource } from "../resource/resource-manage";
 import { Block } from "./block";
 import { ReactiveBase } from '../core/reactive-base';
+import { VoxGame } from '../core/vox-game';
 
 export const sectorWidth = 120;
 const sectorCount = 4;
 export const blockWidth = 30;//120/4
 
 export class Sector extends ReactiveBase implements IDrawable{
-  constructor(resource: VoxResource, x: number, y: number, map: Array<Array<number>>) {
-    super();
-    this.resource = resource;
+  constructor(game: VoxGame, x: number, y: number, map: Array<Array<number>>) {
+    super(game);
+    this.game = game;
+    this.resource = game.world.resource;
     this.worldx = x;
     this.worldy = y;
     this.map = [];
     for (let i = 0; i < 4; i++) {
       let row = [];
       for (let j = 0; j < 4; j++) {
-        row.push(new Block(map[i][j],resource))
+        row.push(new Block(map[i][j],game))
       }
       this.map.push(row);
     }
@@ -31,6 +33,7 @@ export class Sector extends ReactiveBase implements IDrawable{
   screeny: number;
   // map: Array<Array<Array<number>>>;
   map: Array<Array<Block>>;
+  game: VoxGame;
   resource: VoxResource;
 
   get id() {

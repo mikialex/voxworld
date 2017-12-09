@@ -3,12 +3,14 @@ import { Canvas2dRenderer } from "../renderer/canvas2d-renderer";
 import { VoxResource } from "../resource/resource-manage";
 import { blockWidth } from "./sector";
 import { ReactiveBase } from "../core/reactive-base";
+import { VoxGame } from "../core/vox-game";
 
 export class Block extends ReactiveBase implements IDrawable {
-  constructor(typeId: number, resource: VoxResource) {
-    super();
+  constructor(typeId: number, game: VoxGame) {
+    super(game);
     this.type = typeId;
-    this.resource = resource;
+    this.game = game;
+    this.resource = game.world.resource;
     this.on('click', this.test);
   }
 
@@ -23,6 +25,7 @@ export class Block extends ReactiveBase implements IDrawable {
   }
 
   type: number;
+  game: VoxGame;
   resource: VoxResource;
   screenx: number;
   screeny: number;

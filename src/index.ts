@@ -18,11 +18,12 @@ let voxResource = new VoxResource(voxMeta);
 //set renderBankend and render element
 let testCanvas = new Canvas2dRenderer(document.getElementById("canvas"),voxResource)
 
-//load player info and setting
-let player = new Player();
-
 //initalize game
-let game = new VoxGame(testCanvas, voxResource, player)
+let game = new VoxGame(testCanvas, voxResource)
+
+//load player info and setting
+let player = new Player(game);
+game.addPlayer(player)
 
 voxResource.load()
   .then(m => {
