@@ -20,8 +20,14 @@ export class VoxGame {
   world: World;
   private _RAFid: number;
   private _hasStarted: boolean = false;
+  preFrameTimeStamp: number;
+  afterFrameTimeStamp: number;
 
-  testdraw() {
+  get frameRate() {
+    return 60 / (this.afterFrameTimeStamp - this.preFrameTimeStamp)
+  }
+
+  draw() {
     this.world.draw(this.renderer, 50, 50);
     this.world.drawSectorBoundaries(this.renderer, 50, 50);
     this.world.drawWorldAxis(this.renderer, 50, 50);
@@ -49,7 +55,14 @@ export class VoxGame {
         return;
       }
       game._RAFid = RAF(mainLoop);
-      // game.world.draw(game.renderer, 50, 50)
+
+      game.preFrameTimeStamp = window.performance.now();
+
+      game.draw();
+
+      game.afterFrameTimeStamp = window.performance.now();
+      
+      console.log(game.frameRate)
     }
   }
 

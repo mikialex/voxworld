@@ -26,7 +26,21 @@ let game = new VoxGame(testCanvas, voxResource, player)
 
 voxResource.load()
   .then(m => {
-    game.testdraw();
-})
+    game.draw();
+  })
 
-game.start();
+function startGame(){
+  game.start();
+}
+
+function stopGame(){
+  game.stop();
+}
+
+document.getElementById('start-game').addEventListener('click',
+  startGame
+)
+
+document.getElementById('stop-game').addEventListener('click',
+stopGame
+)
