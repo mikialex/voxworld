@@ -11,12 +11,12 @@ export class VoxGame extends ReactiveBase{
     super();
     this.renderer = renderer;
     this.element = renderer.element;
-    this.element.addEventListener('click',this.handleCanvasClick)
+    this.element.addEventListener('click',(this.handleCanvasClick).bind(this))
+    this.element.addEventListener('mousemove',(this.handleCanvasMouseMove).bind(this))
     //test load
     this.world = new World(resource);
     this.player = player;
     
-
     //test draw
     
   }
@@ -36,7 +36,10 @@ export class VoxGame extends ReactiveBase{
 
   handleCanvasClick(e:MouseEvent) {
     console.log(e);
-    //clickCast(e.clientX,e.clientY);
+    this.world.testClick(e.offsetX, e.offsetY)
+  }
+  handleCanvasMouseMove(e: MouseEvent) {
+    // console.log(e);
   }
 
   draw() {
@@ -59,8 +62,13 @@ export class VoxGame extends ReactiveBase{
   }
 
   stop() {
-    this._hasStarted = false;
-    console.log('game stoped')
+    if (this._hasStarted) {
+      this._hasStarted = false;
+      this.emit('gamestop');
+      console.log('game stoped')
+    } else {
+      console.log('game has already stoped')
+    }
   }
 
 
@@ -77,7 +85,7 @@ export class VoxGame extends ReactiveBase{
 
       game.afterFrameTimeStamp = window.performance.now();
       
-      console.log(game.frameRate)
+      // console.log(game.frameRate)
     }
   }
 

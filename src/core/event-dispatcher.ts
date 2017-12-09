@@ -1,7 +1,7 @@
 import { VoxEvent } from "./event";
 
 interface eventAction{
-
+  
 }
 
 export class EventDispatcher {
@@ -32,8 +32,13 @@ export class EventDispatcher {
     }
   }
 
-  on(eventName: string,action:any) {
-    this.eventHandlers[eventName].push(action);
+  on(eventName: string, action: any) {
+    if (this.eventHandlers[eventName]) {
+      this.eventHandlers[eventName].push(action);
+    } else {
+      this.eventHandlers[eventName] = [];
+      this.eventHandlers[eventName].push(action);
+    }
   }
 
   off(eventName: string,action:any) {
