@@ -20,16 +20,28 @@ export abstract class ReactiveBase implements IEventhandleable {
   //   this.centerInputHandler.addReactiveBase(base);
   // }
   
-  on(eventName:string,action:any) {
-    this.eventDispatcher.on(eventName,action)
+  on(eventName: string, action: any) {
+    if (eventName === 'keydown') {
+      this.centerInputHandler.on(eventName, action);
+    } else {
+      this.eventDispatcher.on(eventName,action)
+    }
   }
 
-  off(eventName:string,action:any) {
-    this.eventDispatcher.off(eventName,action)
+  off(eventName: string, action: any) {
+    if (eventName === 'keydown') {
+      this.centerInputHandler.off(eventName, action);
+    } else {
+      this.eventDispatcher.off(eventName,action)
+    }
   }
 
   emit(eventName: string, event?: VoxEvent<any>) {
-    this.eventDispatcher.emit(eventName,event);
+    if (eventName === 'keydown') {
+      this.centerInputHandler.emit(eventName, event);
+    } else {
+      this.eventDispatcher.emit(eventName, event);
+    }  
   }
 
   abstract pointTest(x: number, y: number): boolean;
