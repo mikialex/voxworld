@@ -15,12 +15,12 @@ export class EventDispatcher {
   target: any;  
 
 
-  emit(eventName: string, event?: VoxEvent<any>) {
-    console.log('event ' + eventName + ' emit!')
+  emit(eventName: string, event?: VoxEvent) {
+    // console.log('event ' + eventName + ' emit!')
 
     //if event is empty
     if (!event) {
-         event = new VoxEvent();
+         event = new VoxEvent(eventName);
       }
     event.target = this.target;
     

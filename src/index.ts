@@ -2,7 +2,7 @@ import { Canvas2dRenderer } from './renderer/canvas2d-renderer'
 // import { voxWorld } from './world/world'
 // import { camera } from './camera/camera'
 
-import { Player } from './player'
+import { Player } from './player/player'
 import { VoxGame } from './core/vox-game'
 import { VoxResource } from "./resource/resource-manage";
 

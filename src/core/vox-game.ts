@@ -1,6 +1,6 @@
 import { Canvas2dRenderer } from '../renderer/canvas2d-renderer'
 import { VoxResource } from "../resource/resource-manage";
-import { Player } from '../player'
+import { Player } from '../player/player'
 import { World } from '../world/world'
 import { ReactiveBase } from './reactive-base';
 import { Camera } from '../camera/camera';
@@ -8,12 +8,12 @@ import { InputHandler } from './input-handler';
 
 
 
-export class VoxGame extends ReactiveBase{
+export class VoxGame extends ReactiveBase {
   constructor(renderer: Canvas2dRenderer, resource: VoxResource) {
     super();
     this.renderer = renderer;
     this.element = renderer.element;
-    this.inputHandler = new InputHandler(this.element); 
+    this.inputHandler = new InputHandler(this); 
     //test load
     this.world = new World(this, resource);
     this.world.initalizeWorld();
@@ -21,6 +21,7 @@ export class VoxGame extends ReactiveBase{
     this.camera.lookAt(100, 100);
     
     //test draw
+    // this.drawList.push()
     
   }
 
@@ -35,6 +36,9 @@ export class VoxGame extends ReactiveBase{
   preFrameTimeStamp: number;
   afterFrameTimeStamp: number;
 
+  get hasStarted() {
+    return this._hasStarted;
+  }
   get frameRate() {
     return 60 / (this.afterFrameTimeStamp - this.preFrameTimeStamp)
   }
@@ -44,11 +48,14 @@ export class VoxGame extends ReactiveBase{
   }
 
 
+  drawList: Array<any> = [];
+
   draw() {
     this.renderer.clear();
     this.world.draw(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
     this.world.drawSectorBoundaries(this.renderer,this.camera.lookAtX, this.camera.lookAtY);
     this.world.drawWorldAxis(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
+    this.player.tick(1);
     this.player.draw(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
   }
 
@@ -87,6 +94,7 @@ export class VoxGame extends ReactiveBase{
 
       game.preFrameTimeStamp = window.performance.now();
 
+      game.inputHandler.emitKey();
       game.draw();
 
       game.afterFrameTimeStamp = window.performance.now();

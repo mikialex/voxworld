@@ -18,10 +18,14 @@ export abstract class ReactiveBase implements IEventhandleable {
 
   // addBaseToCenterInputHandler(base:ReactiveBase) {
   //   this.centerInputHandler.addReactiveBase(base);
-  // }
+  // }\
+
+  static isKeyboardEvent(eventName:string) {
+    return eventName === 'keydown'||eventName === 'keyup'||eventName === 'keyactive'
+  }
   
   on(eventName: string, action: any) {
-    if (eventName === 'keydown') {
+    if (ReactiveBase.isKeyboardEvent(eventName)) {
       this.centerInputHandler.on(eventName, action);
     } else {
       this.eventDispatcher.on(eventName,action)
@@ -29,15 +33,15 @@ export abstract class ReactiveBase implements IEventhandleable {
   }
 
   off(eventName: string, action: any) {
-    if (eventName === 'keydown') {
+    if (ReactiveBase.isKeyboardEvent(eventName)) {
       this.centerInputHandler.off(eventName, action);
     } else {
       this.eventDispatcher.off(eventName,action)
     }
   }
 
-  emit(eventName: string, event?: VoxEvent<any>) {
-    if (eventName === 'keydown') {
+  emit(eventName: string, event?: VoxEvent) {
+    if (ReactiveBase.isKeyboardEvent(eventName)) {
       this.centerInputHandler.emit(eventName, event);
     } else {
       this.eventDispatcher.emit(eventName, event);
