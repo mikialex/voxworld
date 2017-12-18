@@ -5,6 +5,7 @@ import { World } from '../world/world'
 import { ReactiveBase } from './reactive-base';
 import { Camera } from '../camera/camera';
 import { InputHandler } from './input-handler';
+import { VoxEvent } from './event';
 
 
 
@@ -35,12 +36,19 @@ export class VoxGame extends ReactiveBase {
   private _hasStarted: boolean = false;
   preFrameTimeStamp: number;
   afterFrameTimeStamp: number;
+  FrameAll = 0;
+  FrameCount = 0;
+
+  private reportIntervalId = 0;
 
   get hasStarted() {
     return this._hasStarted;
   }
   get frameRate() {
     return 60 / (this.afterFrameTimeStamp - this.preFrameTimeStamp)
+  }
+  get averageFrameRate() {
+    return this.FrameAll / this.FrameCount;
   }
 
   addPlayer( player: Player) {
@@ -59,12 +67,22 @@ export class VoxGame extends ReactiveBase {
     this.player.draw(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
   }
 
+  updateReport() {
+    this.FrameAll += this.frameRate;
+    this.FrameCount++;
+    this.emit('report', new VoxEvent('report', {
+      frameRate: Math.floor(this.frameRate),
+      averageFrameRate:Math.floor(this.averageFrameRate),
+    }));
+  }
+
   start() {
     if (!this._hasStarted) {
       this._hasStarted = true;
       console.log('game started')
       this.emit('gamestart');
       VoxGame.createMainLoop(this, window.requestAnimationFrame)();
+      this.reportIntervalId = window.setInterval((this.updateReport).bind(this), 100);
     } else {
       console.log('game has already started')
     }
@@ -73,6 +91,7 @@ export class VoxGame extends ReactiveBase {
   stop() {
     if (this._hasStarted) {
       this._hasStarted = false;
+      window.clearInterval(this.reportIntervalId);
       this.emit('gamestop');
       console.log('game stoped')
     } else {

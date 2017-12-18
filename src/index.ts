@@ -7,6 +7,7 @@ import { VoxGame } from './core/vox-game'
 import { VoxResource } from "./resource/resource-manage";
 
 import {voxMeta} from './assets/vox-meta'
+import { VoxEvent } from './core/event';
 
 console.log('vox world welcomed')
 
@@ -16,10 +17,17 @@ console.log('vox world welcomed')
 let voxResource = new VoxResource(voxMeta);
 
 //set renderBankend and render element
-let testCanvas = new Canvas2dRenderer(document.getElementById("canvas"),voxResource)
+let testCanvas = new Canvas2dRenderer(document.getElementById("canvas"), voxResource)
+
+
+function updateInfo(e:VoxEvent) {
+  document.getElementById('frame-rate').innerText = e.payload.frameRate;
+  document.getElementById('frame-rate-average').innerText = e.payload.averageFrameRate;
+}
 
 //initalize game
 let game = new VoxGame(testCanvas, voxResource)
+game.on('report', updateInfo);
 
 //load player info and setting
 let player = new Player(game);
