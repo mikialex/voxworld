@@ -26,9 +26,6 @@ export class Player extends ReactiveBase {
     // this.vx = 1;
   }
 
-
-
-
   x = 40;
   y = 20;
   vx = 1;
@@ -76,5 +73,9 @@ export class Player extends ReactiveBase {
 
   pointTest(x:number,y:number) {
     return false;
+  }
+
+  dispose(){
+
   }
 }

@@ -40,6 +40,7 @@ voxResource.load()
 
 function startGame(){
   game.start();
+  document.getElementById('canvas').focus();
 }
 
 function stopGame(){

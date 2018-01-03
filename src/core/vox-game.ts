@@ -40,15 +40,23 @@ export class VoxGame extends ReactiveBase {
   FrameCount = 0;
 
   private reportIntervalId = 0;
+  private _worldSpeed=1;
 
   get hasStarted() {
     return this._hasStarted;
   }
   get frameRate() {
-    return 60 / (this.afterFrameTimeStamp - this.preFrameTimeStamp)
+    return 1000 / (this.afterFrameTimeStamp - this.preFrameTimeStamp);
   }
   get averageFrameRate() {
     return this.FrameAll / this.FrameCount;
+  }
+  get worldSpeed(){
+    return this._worldSpeed;
+  }
+
+  updataWorldSpeed(){
+    this._worldSpeed= (this.afterFrameTimeStamp - this.preFrameTimeStamp)/16;
   }
 
   addPlayer( player: Player) {
@@ -63,7 +71,7 @@ export class VoxGame extends ReactiveBase {
     this.world.draw(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
     this.world.drawSectorBoundaries(this.renderer,this.camera.lookAtX, this.camera.lookAtY);
     this.world.drawWorldAxis(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
-    this.player.tick(1);
+    this.player.tick(this.worldSpeed);
     this.player.draw(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
   }
 
@@ -117,6 +125,7 @@ export class VoxGame extends ReactiveBase {
       game.draw();
 
       game.afterFrameTimeStamp = window.performance.now();
+      game.updataWorldSpeed();
       
       // console.log(game.frameRate)
     }
