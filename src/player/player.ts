@@ -18,6 +18,7 @@ export class Player extends ReactiveBase {
       } else if (e.payload.keyType === 'ArrowRight') {
         this.vx =  Player.vAdd(this.vx)
       }
+      this.vIdentitify();
     })
   }
 
@@ -26,11 +27,12 @@ export class Player extends ReactiveBase {
   }
 
   static vPrimary = 15;
-
+  static vPrimarySquare = 225;
   x = 40;
   y = 20;
-  vx = 1;
+  vx = 0;
   vy = 0;
+
 
   get vSquare(){
     return this.vx*this.vx+this.vy*this.vy;
@@ -41,6 +43,14 @@ export class Player extends ReactiveBase {
     this.vy = Player.vDecay(this.vy);
     this.x = this.x + this.vx * timeSpeed;
     this.y = this.y + this.vy * timeSpeed;
+  }
+
+  vIdentitify(){
+    const ratio=Player.vPrimarySquare/this.vSquare;
+    if(ratio<1){
+      this.vx=this.vx*ratio;
+      this.vy=this.vy*ratio;
+    }
   }
 
   static vAdd(v: number) {
