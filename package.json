@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack --config webpack.config.js",
-    "dev":"node_modules/.bin/webpack-dev-server --port 9090 --open"
+    "dev": "node_modules/.bin/webpack-dev-server --port 9090 --open"
   },
   "keywords": [
     "vox",
@@ -20,6 +20,7 @@
   "devDependencies": {
     "html-webpack-plugin": "^2.29.0",
     "ts-loader": "^2.2.2",
+    "tslint": "^5.8.0",
     "typescript": "^2.4.1",
     "webpack": "^3.1.0",
     "webpack-dev-server": "^2.5.1"
