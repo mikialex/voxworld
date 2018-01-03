@@ -73,6 +73,7 @@ export class VoxGame extends ReactiveBase {
     this.world.drawWorldAxis(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
     this.player.tick(this.worldSpeed);
     this.player.draw(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
+    this.camera.lookAt(300-this.player.x,200-this.player.y);
   }
 
   updateReport() {

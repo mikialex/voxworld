@@ -33,23 +33,22 @@ export class Player extends ReactiveBase {
   vx = 0;
   vy = 0;
 
-
-  get vSquare(){
-    return this.vx*this.vx+this.vy*this.vy;
+  get vSquare() {
+    return this.vx * this.vx + this.vy * this.vy;
   }
 
-  tick(timeSpeed: number) {
+  public tick(timeSpeed: number) {
     this.vx = Player.vDecay(this.vx);
     this.vy = Player.vDecay(this.vy);
     this.x = this.x + this.vx * timeSpeed;
     this.y = this.y + this.vy * timeSpeed;
   }
 
-  vIdentitify(){
-    const ratio=Player.vPrimarySquare/this.vSquare;
-    if(ratio<1){
-      this.vx=this.vx*ratio;
-      this.vy=this.vy*ratio;
+  private vIdentitify() {
+    const ratio = Player.vPrimarySquare / this.vSquare;
+    if (ratio < 1) {
+      this.vx = this.vx * ratio;
+      this.vy = this.vy * ratio;
     }
   }
 
