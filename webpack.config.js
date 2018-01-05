@@ -7,7 +7,7 @@ var APP_PATH = path.resolve(ROOT_PATH, 'src');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'dist');
 var TEM_PATH = path.resolve(ROOT_PATH, '');
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
@@ -27,13 +27,13 @@ module.exports = {
     }
   },
   // // enable dev source map
-  // devtool: 'eval-source-map',
+  devtool: 'eval-source-map',
   // // enable dev server
-  // devServer: {
-  //   hot: true,
-  //   // contentBase: path.resolve(__dirname, 'dist'),
-  //   // publicPath: '/'
-  // },
+  devServer: {
+    hot: true,
+    // contentBase: path.resolve(__dirname, 'dist'),
+    // publicPath: '/'
+  },
   module: {
     rules: [{
         test: /\.tsx?$/,

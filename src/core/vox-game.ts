@@ -14,16 +14,16 @@ export class VoxGame extends ReactiveBase {
     super();
     this.renderer = renderer;
     this.element = renderer.element;
-    this.inputHandler = new InputHandler(this); 
+    this.inputHandler = new InputHandler(this);
     //test load
     this.world = new World(this, resource);
     this.world.initalizeWorld();
     this.camera = new Camera();
     this.camera.lookAt(100, 100);
-    
+
     //test draw
     // this.drawList.push()
-    
+
   }
 
   element: HTMLCanvasElement;
@@ -40,7 +40,7 @@ export class VoxGame extends ReactiveBase {
   FrameCount = 0;
 
   private reportIntervalId = 0;
-  private _worldSpeed=1;
+  private _worldSpeed = 1;
 
   get hasStarted() {
     return this._hasStarted;
@@ -51,15 +51,15 @@ export class VoxGame extends ReactiveBase {
   get averageFrameRate() {
     return this.FrameAll / this.FrameCount;
   }
-  get worldSpeed(){
+  get worldSpeed() {
     return this._worldSpeed;
   }
 
-  updataWorldSpeed(){
-    this._worldSpeed= (this.afterFrameTimeStamp - this.preFrameTimeStamp)/16;
+  updataWorldSpeed() {
+    this._worldSpeed = (this.afterFrameTimeStamp - this.preFrameTimeStamp) / 16;
   }
 
-  addPlayer( player: Player) {
+  addPlayer(player: Player) {
     this.player = player;
   }
 
@@ -69,11 +69,15 @@ export class VoxGame extends ReactiveBase {
   draw() {
     this.renderer.clear();
     this.world.draw(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
-    this.world.drawSectorBoundaries(this.renderer,this.camera.lookAtX, this.camera.lookAtY);
+    this.world.drawSectorBoundaries(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
     this.world.drawWorldAxis(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
-    this.player.tick(this.worldSpeed);
     this.player.draw(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
-    this.camera.lookAt(300-this.player.x,200-this.player.y);
+    this.camera.lookAt(300 - this.player.x, 200 - this.player.y);
+  }
+
+  tickWorld() {
+    this.player.tick(this.worldSpeed);
+    this.player.testSelfCollision(this.world);
   }
 
   updateReport() {
@@ -81,7 +85,7 @@ export class VoxGame extends ReactiveBase {
     this.FrameCount++;
     this.emit('report', new VoxEvent('report', {
       frameRate: Math.floor(this.frameRate),
-      averageFrameRate:Math.floor(this.averageFrameRate),
+      averageFrameRate: Math.floor(this.averageFrameRate),
     }));
   }
 
@@ -108,7 +112,7 @@ export class VoxGame extends ReactiveBase {
     }
   }
 
-  pointTest(x:number,y:number) {
+  pointTest(x: number, y: number) {
     return false;
   }
 
@@ -123,11 +127,13 @@ export class VoxGame extends ReactiveBase {
       game.preFrameTimeStamp = window.performance.now();
 
       game.inputHandler.emitKey();
+
+      game.tickWorld();
       game.draw();
 
       game.afterFrameTimeStamp = window.performance.now();
       game.updataWorldSpeed();
-      
+
       // console.log(game.frameRate)
     }
   }

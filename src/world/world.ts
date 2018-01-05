@@ -4,26 +4,27 @@ import { Sector } from "./sector";
 
 import { testmap } from '../assets/map/test-sectors'
 import { VoxResource } from "../resource/resource-manage";
-import {sectorWidth} from './sector'
+import { sectorWidth } from './sector'
 import { ReactiveBase } from '../core/reactive-base';
 import { VoxGame } from '../core/vox-game';
+import { BoundingBox } from '../player/player';
 
-export class World extends ReactiveBase implements IDrawable{
+export class World extends ReactiveBase implements IDrawable {
   map: Array<Sector> = [];
   game: VoxGame;
   resource: VoxResource;
   screenx: number;
   screeny: number;
 
-  constructor(game: VoxGame,resource:VoxResource) {
+  constructor(game: VoxGame, resource: VoxResource) {
     super(game);
     this.game = game;
     this.resource = resource;
   }
 
   initalizeWorld() {
-    this.resource.voxMetaInfo.voxWorldMap.forEach((sec:any) => {
-      let sector = new Sector(this.game,sec.x, sec.y, sec.map);
+    this.resource.voxMetaInfo.voxWorldMap.forEach((sec: any) => {
+      let sector = new Sector(this.game, sec.x, sec.y, sec.map);
       this.map.push(sector);
     })
   }
@@ -36,16 +37,26 @@ export class World extends ReactiveBase implements IDrawable{
     })
   }
 
-  pointTest(x: number, y: number) {
-    return x >= this.screenx && x < (this.screenx + sectorWidth*3) && y >= this.screeny && y < (this.screeny + sectorWidth*3)
+  public testObjectCollision(bbox: BoundingBox) {
+    let ret = false;
+    this.map.forEach((sector) => {
+      if (sector.testObjectCollision(bbox)) {
+        ret = true;
+      }
+    })
+    return ret
   }
 
-  testClick(x: number,y:number) {
+  pointTest(x: number, y: number) {
+    return x >= this.screenx && x < (this.screenx + sectorWidth * 3) && y >= this.screeny && y < (this.screeny + sectorWidth * 3)
+  }
+
+  testClick(x: number, y: number) {
     if (this.pointTest(x, y)) {
       this.emit('click');
     }
     this.map.forEach((sector) => {
-      sector.testClick(x,y);
+      sector.testClick(x, y);
     })
   }
 
