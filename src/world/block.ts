@@ -62,7 +62,8 @@ export class Block extends ReactiveBase implements IDrawable {
   }
 
 
-  public testObjectCollision(bbox: BoundingBox) {
+  public testObjectCollision(object: any, isJustTest: boolean) {
+    const bbox = object.boundSquare;
     const outMinX = bbox.leftTop.x;
     const outMaxX = bbox.rightTop.x;
     const outMinY = bbox.leftTop.y;
@@ -76,21 +77,25 @@ export class Block extends ReactiveBase implements IDrawable {
     if (outMinX <= selfMaxX && outMaxX >= selfMinX
       && outMinY <= selfMaxY && outMaxY >= selfMinY) { //intersected
       if (this.type == 0) {                            //collision
-        console.log(this.sectorIndexX, this.sectorIndexY);
-        console.log(this.sector);
-        let a = 1;
-        for (let index = 0; index < 30000000; index++) {
-          a++;
+        // console.log(this.sectorIndexX, this.sectorIndexY);
+        // console.log(this.sector);
+        // let a = 1;
+        // for (let index = 0; index < 30000000; index++) {
+        //   a++;
+        // }
+        // console.log(a);
+        console.log('co')
+        if (!isJustTest) {
+          object.emit('collision', new VoxEvent('collision', this));
         }
-        console.log(a);
-        // this.emit('collison', new VoxEvent('passby', this));
-        // return true;
-        return false;
+        return true;
       } else {                                         //not need collison
-        this.emit('passby', new VoxEvent('passby', this));
-        return false
+        if (!isJustTest) {
+          this.emit('passby', new VoxEvent('passby', this));
+        }
+        return false;
       }
-    } else {                                         //not intersected
+    } else {
       return false;
     }
   }

@@ -37,14 +37,14 @@ export class World extends ReactiveBase implements IDrawable {
     })
   }
 
-  public testObjectCollision(bbox: BoundingBox) {
+  public testObjectCollision(object: any, isJustTest: boolean) {
     let ret = false;
     this.map.forEach((sector) => {
-      if (sector.testObjectCollision(bbox)) {
+      if (sector.testObjectCollision(object, isJustTest)) {
         ret = true;
       }
     })
-    return ret
+    return ret;
   }
 
   pointTest(x: number, y: number) {

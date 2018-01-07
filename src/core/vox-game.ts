@@ -84,7 +84,7 @@ export class VoxGame extends ReactiveBase {
 
   tickWorld() {
     this.player.tick(this.worldSpeed);
-    this.player.testSelfCollision(this.world);
+    this.player.testSelfCollision(this.world, false);
   }
 
   updateReport() {

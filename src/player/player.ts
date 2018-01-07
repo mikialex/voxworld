@@ -33,11 +33,31 @@ export class Player extends ReactiveBase {
       this.vIdentitify();
     })
 
-    this.on('collision', (e: VoxEvent) => { //handlie collision
+    this.on('collision', (e: VoxEvent) => { //handle collision
+      const newVx = this.vx;
+      const newVy = this.vy;
+      const newWorldX = this.worldX;
+      const newWorldY = this.worldX;
+      //try reset X first;
       this.vx = 0;
-      this.vy = 0;
       this.worldX = this.oldx;
+      console.log(this.testSelfCollision(this.game.world, true))
+      if (!this.testSelfCollision(this.game.world, true)) {
+        console.log('allow y')
+        return
+      }
+      console.log('y test failed')
+      //try reset Y;
+      this.vx = newVx;
+      this.worldX = newWorldX;
+      this.vy = 0;
       this.worldY = this.oldy;
+      if (!this.testSelfCollision(this.game.world, true)) {
+        console.log('allow x')
+        return
+      }
+      this.vx = 0;
+      this.worldX = this.oldx;
     })
   }
 
@@ -67,16 +87,12 @@ export class Player extends ReactiveBase {
     return this.vx * this.vx + this.vy * this.vy;
   }
 
-  public testObjectCollision(bbox: BoundingBox) {
+  public testObjectCollision(object: any) {
 
   }
 
-  public testSelfCollision(world: World) {
-    const ret = world.testObjectCollision(this.boundSquare)
-    if (ret) {
-      this.emit('collision', new VoxEvent('collision'));
-    }
-    return ret
+  public testSelfCollision(world: World, isJustTest: boolean) {
+    return world.testObjectCollision(this, isJustTest)
   }
 
   public tick(timeSpeed: number) {

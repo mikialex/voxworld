@@ -45,16 +45,16 @@ export class Sector extends ReactiveBase implements IDrawable {
     return this.worldIndexX + ' ' + this.worldIndexY;
   }
 
-  public testObjectCollision(bbox: BoundingBox) {
+  public testObjectCollision(object: any, isJustTest: boolean) {
     let ret = false;
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
-        if (this.map[i][j].testObjectCollision(bbox)) {
+        if (this.map[i][j].testObjectCollision(object, isJustTest)) {
           ret = true;
         }
       }
     }
-    return ret;
+    return ret
   }
 
 
