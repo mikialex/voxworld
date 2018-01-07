@@ -24,7 +24,7 @@ export class BlockCollection {
       }
       this.addBlock(block);
     });
-
+    console.log(this.collection);
   }
 
   metaInfo: any;

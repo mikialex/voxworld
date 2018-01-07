@@ -27,11 +27,11 @@ export class Block extends ReactiveBase implements IDrawable {
   test() {
     console.log('clicked')
     console.log(this.worldX, this.worldY);
-    // if (this.type !== 0) {
-    //   this.type = 0;
-    // } else {
-    //   this.type = 2;
-    // }
+    if (this.type !== 0) {
+      this.type = 0;
+    } else {
+      this.type = 2;
+    }
   }
 
   testPass() {
@@ -76,7 +76,7 @@ export class Block extends ReactiveBase implements IDrawable {
 
     if (outMinX <= selfMaxX && outMaxX >= selfMinX
       && outMinY <= selfMaxY && outMaxY >= selfMinY) { //intersected
-      if (this.type == 0) {                            //collision
+      if (this.type == 4) {                            //collision
         // console.log(this.sectorIndexX, this.sectorIndexY);
         // console.log(this.sector);
         // let a = 1;
@@ -84,7 +84,6 @@ export class Block extends ReactiveBase implements IDrawable {
         //   a++;
         // }
         // console.log(a);
-        console.log('co')
         if (!isJustTest) {
           object.emit('collision', new VoxEvent('collision', this));
         }

@@ -41,19 +41,18 @@ export class Player extends ReactiveBase {
       //try reset X first;
       this.vx = 0;
       this.worldX = this.oldx;
-      console.log(this.testSelfCollision(this.game.world, true))
       if (!this.testSelfCollision(this.game.world, true)) {
-        console.log('allow y')
+        // console.log('allow y')
         return
       }
-      console.log('y test failed')
+      // console.log('y test failed')
       //try reset Y;
       this.vx = newVx;
       this.worldX = newWorldX;
       this.vy = 0;
       this.worldY = this.oldy;
       if (!this.testSelfCollision(this.game.world, true)) {
-        console.log('allow x')
+        // console.log('allow x')
         return
       }
       this.vx = 0;

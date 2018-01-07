@@ -1,6 +1,6 @@
 import { ILoadable } from "../../interface/ILoadable";
 
-export class Texture implements ILoadable{
+export class Texture implements ILoadable {
   constructor(name: string, url: string) {
     this.image = new Image();
     this.name = name;
