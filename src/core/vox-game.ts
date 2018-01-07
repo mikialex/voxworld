@@ -11,7 +11,7 @@ import { VoxEvent } from './event';
 
 export class VoxGame extends ReactiveBase {
   constructor(renderer: Canvas2dRenderer, resource: VoxResource) {
-    super();
+    super(null);
     this.renderer = renderer;
     this.element = renderer.element;
     this.inputHandler = new InputHandler(this);
@@ -53,10 +53,17 @@ export class VoxGame extends ReactiveBase {
   }
   get worldSpeed() {
     return this._worldSpeed;
+
+    // return 0.1;
   }
 
   updataWorldSpeed() {
-    this._worldSpeed = (this.afterFrameTimeStamp - this.preFrameTimeStamp) / 16;
+    if (this.frameRate < 60) {
+      const timeD = this.afterFrameTimeStamp - this.preFrameTimeStamp;
+      this._worldSpeed = (this.afterFrameTimeStamp - this.preFrameTimeStamp) / 16;
+    } else {
+      this._worldSpeed = 1;
+    }
   }
 
   addPlayer(player: Player) {

@@ -6,29 +6,31 @@ import { InputHandler } from "./input-handler";
 import { VoxGame } from "./vox-game";
 
 export abstract class ReactiveBase implements IEventhandleable {
-  constructor(game?:VoxGame) {
+  constructor(game: VoxGame) {
     this.eventDispatcher = new EventDispatcher(this);
     if (game) {
       this.centerInputHandler = game.inputHandler;
       this.centerInputHandler.addReactiveBase(this);
     }
+    this.game = game;
   }
+  game: VoxGame;
   centerInputHandler: InputHandler;
-  eventDispatcher:EventDispatcher
+  eventDispatcher: EventDispatcher
 
   // addBaseToCenterInputHandler(base:ReactiveBase) {
   //   this.centerInputHandler.addReactiveBase(base);
   // }\
 
-  static isKeyboardEvent(eventName:string) {
-    return eventName === 'keydown'||eventName === 'keyup'||eventName === 'keyactive'
+  static isKeyboardEvent(eventName: string) {
+    return eventName === 'keydown' || eventName === 'keyup' || eventName === 'keyactive'
   }
-  
+
   on(eventName: string, action: any) {
     if (ReactiveBase.isKeyboardEvent(eventName)) {
       this.centerInputHandler.on(eventName, action);
     } else {
-      this.eventDispatcher.on(eventName,action)
+      this.eventDispatcher.on(eventName, action)
     }
   }
 
@@ -36,7 +38,7 @@ export abstract class ReactiveBase implements IEventhandleable {
     if (ReactiveBase.isKeyboardEvent(eventName)) {
       this.centerInputHandler.off(eventName, action);
     } else {
-      this.eventDispatcher.off(eventName,action)
+      this.eventDispatcher.off(eventName, action)
     }
   }
 
@@ -45,9 +47,9 @@ export abstract class ReactiveBase implements IEventhandleable {
       this.centerInputHandler.emit(eventName, event);
     } else {
       this.eventDispatcher.emit(eventName, event);
-    }  
+    }
   }
 
   abstract pointTest(x: number, y: number): boolean;
-  
+
 }

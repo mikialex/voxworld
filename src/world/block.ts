@@ -78,6 +78,11 @@ export class Block extends ReactiveBase implements IDrawable {
       if (this.type == 0) {                            //collision
         console.log(this.sectorIndexX, this.sectorIndexY);
         console.log(this.sector);
+        let a = 1;
+        for (let index = 0; index < 30000000; index++) {
+          a++;
+        }
+        console.log(a);
         // this.emit('collison', new VoxEvent('passby', this));
         // return true;
         return false;

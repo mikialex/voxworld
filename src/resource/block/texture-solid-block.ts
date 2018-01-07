@@ -9,7 +9,7 @@ export class TextureSolidBlock extends SolidBlock {
   }
   topTexture: number;
   bottomTexture: number;
-  activeColor: '#999';
+  activeColor = '#999';
 
   draw(renderer: Canvas2dRenderer, x: number, y: number, blockState: any) {
     if (blockState.isPassingBy) {

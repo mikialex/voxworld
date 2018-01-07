@@ -16,18 +16,19 @@ export interface BoundingBox {
   rightBottom: Point,
 }
 
+
 export class Player extends ReactiveBase {
   constructor(game: VoxGame) {
     super(game);
     this.on('keyactive', (e: VoxEvent) => { //handle key control
       if (e.payload.keyType === 'ArrowUp') {
-        this.vy = Player.vAddReverse(this.vy)
+        this.vy = Player.vAddReverse(this.vy, this.game.worldSpeed);
       } else if (e.payload.keyType === 'ArrowDown') {
-        this.vy = Player.vAdd(this.vy)
+        this.vy = Player.vAdd(this.vy, this.game.worldSpeed);
       } else if (e.payload.keyType === 'ArrowLeft') {
-        this.vx = Player.vAddReverse(this.vx);
+        this.vx = Player.vAddReverse(this.vx, this.game.worldSpeed);
       } else if (e.payload.keyType === 'ArrowRight') {
-        this.vx = Player.vAdd(this.vx)
+        this.vx = Player.vAdd(this.vx, this.game.worldSpeed);
       }
       this.vIdentitify();
     })
@@ -44,8 +45,8 @@ export class Player extends ReactiveBase {
     // this.vx = 1;
   }
 
-  static vPrimary = 20;
-  static vPrimarySquare = 400;
+  static vPrimary = 5;
+  static vPrimarySquare = 25;
   worldX = 40;
   worldY = 20;
   oldx = 40;
@@ -79,8 +80,8 @@ export class Player extends ReactiveBase {
   }
 
   public tick(timeSpeed: number) {
-    this.vx = Player.vDecay(this.vx);
-    this.vy = Player.vDecay(this.vy);
+    this.vx = Player.vDecay(this.vx, timeSpeed);
+    this.vy = Player.vDecay(this.vy, timeSpeed);
     this.oldx = this.worldX;
     this.oldy = this.worldY;
     this.worldX = this.worldX + this.vx * timeSpeed;
@@ -97,25 +98,27 @@ export class Player extends ReactiveBase {
     }
   }
 
-  static vAdd(v: number) {
+  static vAddRate = 1;
+
+  static vAdd(v: number, dt: number) {
     if (v < Player.vPrimary) {
-      return v + 2;
+      return v + Player.vAddRate * dt;
     } else if (v >= Player.vPrimary) {
       return Player.vPrimary;
     }
   }
 
-  static vAddReverse(v: number) {
+  static vAddReverse(v: number, dt: number) {
     if (v > -Player.vPrimary) {
-      return v - 2;
+      return v - Player.vAddRate * dt;
     } else if (v <= -Player.vPrimary) {
       return -Player.vPrimary;
     }
   }
 
-  static vDecay(v: number) {
+  static vDecay(v: number, dt: number) {
     // return 0;
-    let decayRate = 1;
+    let decayRate = 0.5 * dt;
     if (v > 0) {
       if (v - decayRate < 0) {
         return 0
