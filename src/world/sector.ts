@@ -2,34 +2,38 @@ import { BlockCollection } from '../resource/block/block-collection'
 import { Canvas2dRenderer } from '../renderer/canvas2d-renderer'
 import { IDrawable } from "../interface/IDrawable";
 import { VoxResource } from "../resource/resource-manage";
-import { Block } from "./block";
+import { Block, blockWidth } from "./block";
 import { ReactiveBase } from '../core/reactive-base';
 import { VoxGame } from '../core/vox-game';
 import { BoundingBox } from '../player/player';
+import { World } from './world';
 
 export const sectorWidth = 120;
 const sectorCount = 4;
-export const blockWidth = 30;//120/4
 
 export class Sector extends ReactiveBase implements IDrawable {
-  constructor(game: VoxGame, x: number, y: number, map: Array<Array<number>>) {
+  constructor(game: VoxGame, indexX: number, indexY: number, map: Array<Array<number>>) {
     super(game);
     this.game = game;
     this.resource = game.world.resource;
-    this.worldx = x;
-    this.worldy = y;
+    this.worldIndexX = indexX;
+    this.worldIndexY = indexY;
+    this.worldX = indexX * sectorWidth;
+    this.worldY = indexY * sectorWidth;
     this.map = [];
     for (let i = 0; i < 4; i++) {
       let row = [];
       for (let j = 0; j < 4; j++) {
-        row.push(new Block(map[i][j], game))
+        row.push(new Block(map[i][j], game, i, j, this))
       }
       this.map.push(row);
     }
   }
 
-  worldx: number;
-  worldy: number;
+  worldIndexX: number;
+  worldIndexY: number;
+  worldX: number;
+  worldY: number;
   screenx: number;
   screeny: number;
   // map: Array<Array<Array<number>>>;
@@ -38,7 +42,7 @@ export class Sector extends ReactiveBase implements IDrawable {
   resource: VoxResource;
 
   get id() {
-    return this.worldx + ' ' + this.worldy;
+    return this.worldIndexX + ' ' + this.worldIndexY;
   }
 
   public testObjectCollision(bbox: BoundingBox) {

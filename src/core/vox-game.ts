@@ -72,7 +72,7 @@ export class VoxGame extends ReactiveBase {
     this.world.drawSectorBoundaries(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
     this.world.drawWorldAxis(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
     this.player.draw(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
-    this.camera.lookAt(300 - this.player.x, 200 - this.player.y);
+    this.camera.lookAt(300 - this.player.worldX, 200 - this.player.worldY);
   }
 
   tickWorld() {

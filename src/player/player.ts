@@ -33,11 +33,10 @@ export class Player extends ReactiveBase {
     })
 
     this.on('collision', (e: VoxEvent) => { //handlie collision
-      console.log(this.x)
       this.vx = 0;
       this.vy = 0;
-      this.x = this.oldx;
-      this.y = this.oldy;
+      this.worldX = this.oldx;
+      this.worldY = this.oldy;
     })
   }
 
@@ -45,10 +44,10 @@ export class Player extends ReactiveBase {
     // this.vx = 1;
   }
 
-  static vPrimary = 15;
-  static vPrimarySquare = 225;
-  x = 40;
-  y = 20;
+  static vPrimary = 20;
+  static vPrimarySquare = 400;
+  worldX = 40;
+  worldY = 20;
   oldx = 40;
   oldy = 20;
   vx = 0;
@@ -56,10 +55,10 @@ export class Player extends ReactiveBase {
 
   get boundSquare() {
     return {
-      leftTop: { x: this.x - 3, y: this.y - 3 },
-      leftBottom: { x: this.x - 3, y: this.y + 3 },
-      rightTop: { x: this.x + 3, y: this.y - 3 },
-      rightBottom: { x: this.x + 3, y: this.y + 3 },
+      leftTop: { x: this.worldX - 3, y: this.worldY - 3 },
+      leftBottom: { x: this.worldX - 3, y: this.worldY + 3 },
+      rightTop: { x: this.worldX + 3, y: this.worldY - 3 },
+      rightBottom: { x: this.worldX + 3, y: this.worldY + 3 },
     }
   }
 
@@ -82,12 +81,12 @@ export class Player extends ReactiveBase {
   public tick(timeSpeed: number) {
     this.vx = Player.vDecay(this.vx);
     this.vy = Player.vDecay(this.vy);
-    this.oldx = this.x;
-    this.oldy = this.y;
-    // this.x = this.x + this.vx * timeSpeed;
-    // this.y = this.y + this.vy * timeSpeed;
-    this.x = this.x + this.vx * 1;
-    this.y = this.y + this.vy * 1;
+    this.oldx = this.worldX;
+    this.oldy = this.worldY;
+    this.worldX = this.worldX + this.vx * timeSpeed;
+    this.worldY = this.worldY + this.vy * timeSpeed;
+    // this.x = this.x + this.vx * 1;
+    // this.y = this.y + this.vy * 1;
   }
 
   private vIdentitify() {
@@ -135,7 +134,7 @@ export class Player extends ReactiveBase {
   }
 
   draw(renderer: Canvas2dRenderer, x: number, y: number) {
-    renderer.fillCircle('#f55', this.x + x, this.y + y, 6);
+    renderer.fillCircle('#f55', this.worldX + x, this.worldY + y, 6);
   }
 
 

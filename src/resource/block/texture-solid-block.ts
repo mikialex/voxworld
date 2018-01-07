@@ -9,8 +9,15 @@ export class TextureSolidBlock extends SolidBlock {
   }
   topTexture: number;
   bottomTexture: number;
-  draw(renderer: Canvas2dRenderer, x: number, y: number) {
-    renderer.paintRectTexture(this.topTexture, x, y, 30, 30);
-    renderer.paintRectTexture(this.bottomTexture, x, y+30, 30, 20);
+  activeColor: '#999';
+
+  draw(renderer: Canvas2dRenderer, x: number, y: number, blockState: any) {
+    if (blockState.isPassingBy) {
+      renderer.fillRect(this.activeColor, x, y, this.blockWidth, this.blockWidth)
+      renderer.paintRectTexture(this.bottomTexture, x, y + this.blockWidth, this.blockWidth, this.renderHeight);
+    } else {
+      renderer.paintRectTexture(this.topTexture, x, y, this.blockWidth, this.blockWidth);
+      renderer.paintRectTexture(this.bottomTexture, x, y + this.blockWidth, this.blockWidth, this.renderHeight);
+    }
   }
 }

@@ -33,7 +33,7 @@ export class World extends ReactiveBase implements IDrawable {
     this.screenx = x;
     this.screeny = y;
     this.map.forEach(sec => {
-      sec.draw(renderer, x + sec.worldx * sectorWidth, y + sec.worldy * sectorWidth);
+      sec.draw(renderer, x + sec.worldIndexX * sectorWidth, y + sec.worldIndexY * sectorWidth);
     })
   }
 
@@ -62,7 +62,7 @@ export class World extends ReactiveBase implements IDrawable {
 
   drawSectorBoundaries(renderer: Canvas2dRenderer, x: number, y: number) {
     this.map.forEach(sec => {
-      sec.drawBoundary(renderer, x + sec.worldx * sectorWidth, y + sec.worldy * sectorWidth);
+      sec.drawBoundary(renderer, x + sec.worldIndexX * sectorWidth, y + sec.worldIndexY * sectorWidth);
     })
   }
 
