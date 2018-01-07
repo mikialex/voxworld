@@ -24,7 +24,7 @@ export class Sector extends ReactiveBase implements IDrawable {
     for (let i = 0; i < 4; i++) {
       let row = [];
       for (let j = 0; j < 4; j++) {
-        row.push(new Block(map[i][j], game, i, j, this))
+        row.push(new Block(map[i][j], game, j, i, this))
       }
       this.map.push(row);
     }

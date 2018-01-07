@@ -26,12 +26,12 @@ export class Block extends ReactiveBase implements IDrawable {
 
   test() {
     console.log('clicked')
-    console.log(this);
-    if (this.type !== 0) {
-      this.type = 0;
-    } else {
-      this.type = 2;
-    }
+    console.log(this.worldX, this.worldY);
+    // if (this.type !== 0) {
+    //   this.type = 0;
+    // } else {
+    //   this.type = 2;
+    // }
   }
 
   testPass() {
