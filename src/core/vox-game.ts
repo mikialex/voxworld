@@ -18,8 +18,6 @@ export class VoxGame extends ReactiveBase {
     //test load
     this.world = new World(this, resource);
     this.world.initalizeWorld();
-    this.camera = new Camera();
-    this.camera.lookAt(100, 100);
 
     //test draw
     // this.drawList.push()
@@ -68,6 +66,9 @@ export class VoxGame extends ReactiveBase {
 
   addPlayer(player: Player) {
     this.player = player;
+  }
+  addCamera(camera: Camera) {
+    this.camera = camera;
   }
 
 

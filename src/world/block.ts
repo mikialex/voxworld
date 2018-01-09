@@ -28,7 +28,7 @@ export class Block extends ReactiveBase implements IDrawable {
     console.log('clicked')
     console.log(this.worldX, this.worldY);
     if (this.type !== 0) {
-      this.type = 0;
+      this.type = 4;
     } else {
       this.type = 2;
     }

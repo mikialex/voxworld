@@ -11,14 +11,14 @@ export class TextureSolidBlock extends SolidBlock {
     }
   }
   topTexture: string;
-  bottomTexture: string;
   activeColor = '#999';
+  bottomTexture: string;
   isWall = false;
 
   draw(renderer: Canvas2dRenderer, x: number, y: number, blockState: any) {
     if (this.isWall) {
       renderer.paintRectTexture(this.topTexture, x, y - this.renderHeight, this.blockWidth, this.blockWidth);
-      renderer.paintRectTexture(this.bottomTexture, x, y + this.blockWidth - this.renderHeight, this.blockWidth, this.renderHeight);
+      renderer.paintRectTexture(this.bottomTexture, x, y + this.blockWidth - this.renderHeight, this.blockWidth, 2 * this.renderHeight);
     } else {
       // if (blockState.isPassingBy) {
       //   renderer.fillRect(this.activeColor, x, y, this.blockWidth, this.blockWidth)
