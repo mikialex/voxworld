@@ -12,6 +12,12 @@ export class Camera {
     this.lookAtY = y;
   }
 
+  public screenSpaceXTranstorm(worldX: number) {
+    return worldX - this.lookAtX;
+  }
 
+  public screenSpaceYTranstorm(worldY: number, worldZ: number) {
+    return worldY - this.lookAtX - worldZ;
+  }
 
 }

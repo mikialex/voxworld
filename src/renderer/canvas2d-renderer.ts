@@ -2,9 +2,9 @@ import { IRenderable } from '../interface/IRenderable'
 import { VoxResource } from "../resource/resource-manage";
 import { Camera } from '../camera/camera';
 
-interface squareFace {
-  x1: number; y1: number; x2: number; y2: number;
-  x3: number; y3: number; x4: number; y4: number;
+interface renderTask {
+  renderIndex: number;
+  renderCallBack: any;
 }
 
 export class Canvas2dRenderer implements IRenderable {
@@ -29,6 +29,11 @@ export class Canvas2dRenderer implements IRenderable {
   }
   render() {
     console.log('rendering')
+  }
+
+  private renderList: any = []
+  pushRenderList(task: renderTask) {
+
   }
 
 
@@ -90,20 +95,35 @@ export class Canvas2dRenderer implements IRenderable {
     }
   }
 
-  fillCircle(color: string, x: number, y: number, r: number) {
-    if (this.isNeedDraw(x - r, y - r, x + r, y + r)) {
+  fillCircle(color: string, screenX: number, screenY: number, r: number) {
+    if (this.isNeedDraw(screenX - r, screenY - r, screenX + r, screenY + r)) {
       this.ctx.fillStyle = color;
       this.ctx.beginPath();
-      this.ctx.arc(x, y, r, 0, 2 * Math.PI, true);
+      this.ctx.arc(screenX, screenY, r, 0, 2 * Math.PI, true);
       this.ctx.closePath();
       this.ctx.fill();
     }
   }
+  fillCircleFromWorld(color: string, worldX: number, worldY: number, worldZ: number, r: number) {
+    this.fillCircle(color,
+      this.camera.screenSpaceXTranstorm(worldX),
+      this.camera.screenSpaceYTranstorm(worldY, worldZ),
+      r
+    )
+  }
 
-  paintRectTexture(texture: string, x: number, y: number, width: number, height: number) {
-    if (this.isNeedDraw(x, y, x + width, y + height)) {
-      this.ctx.drawImage(this.resource.textureCollection.collection[texture].image, x, y, width, height);
+  paintRectTexture(texture: string, screenX: number, screenY: number, width: number, height: number) {
+    if (this.isNeedDraw(screenX, screenY, screenX + width, screenY + height)) {
+      this.ctx.drawImage(this.resource.textureCollection.collection[texture].image, screenX, screenY, width, height);
     }
+  }
+  paintRectTextureFromWorld(texture: string,
+    worldX: number, worldY: number, worldZ: number,
+    width: number, height: number) {
+    this.paintRectTexture(texture,
+      this.camera.screenSpaceXTranstorm(worldX),
+      this.camera.screenSpaceYTranstorm(worldY, worldZ),
+      width, height)
   }
 
 }

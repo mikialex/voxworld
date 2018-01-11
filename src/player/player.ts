@@ -68,6 +68,7 @@ export class Player extends ReactiveBase {
   static vPrimarySquare = 25;
   worldX = 40;
   worldY = 20;
+  worldZ = 1;
   oldx = 40;
   oldy = 20;
   vx = 0;
@@ -153,6 +154,21 @@ export class Player extends ReactiveBase {
 
   draw(renderer: Canvas2dRenderer, x: number, y: number) {
     renderer.fillCircle('#f55', this.worldX + x, this.worldY + y, 6);
+  }
+
+  drawW() {
+    this.game.renderer.fillCircleFromWorld('#f55', this.worldX, this.worldY, this.worldZ, 6);
+  }
+
+  get renderIndex() {
+    return 1
+  }
+  pushRenderer(renderer: Canvas2dRenderer, worldX: number, worldY: number) {
+    renderer.pushRenderList({
+      renderIndex: this.renderIndex,
+      renderCallBack: this.drawW()
+    })
+
   }
 
 
