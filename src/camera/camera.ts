@@ -20,4 +20,12 @@ export class Camera {
     return this.lookAtY + worldY - worldZ;
   }
 
+  public worldSpaceXTranstorm(screenX: number) {
+    return screenX - this.lookAtX;
+  }
+
+  public worldSpaceYTranstorm(screenX: number) {
+    return screenX - this.lookAtY;
+  }
+
 }

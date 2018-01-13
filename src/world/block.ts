@@ -121,7 +121,7 @@ export class Block extends ReactiveBase implements IDrawable {
   }
 
   pointTest(x: number, y: number) {
-    return x >= this.screenx && x < (this.screenx + blockWidth) && y >= this.screeny && y < (this.screeny + blockWidth)
+    return x >= this.worldX && x < (this.worldX + blockWidth) && y >= this.worldY && y < (this.worldY + blockWidth)
   }
 
   testClick(x: number, y: number) {

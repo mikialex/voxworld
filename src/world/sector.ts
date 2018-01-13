@@ -76,7 +76,11 @@ export class Sector extends ReactiveBase implements IDrawable {
     }
   }
   pushRenderer(renderer: Canvas2dRenderer) {
-    renderer.pushRenderList(this);
+    for (let i = 0; i < sectorCount; i++) {
+      for (let j = 0; j < sectorCount; j++) {
+        this.map[i][j].pushRenderer(renderer);
+      }
+    }
   }
 
   pointTest(x: number, y: number) {

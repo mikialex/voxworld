@@ -46,7 +46,9 @@ export class World extends ReactiveBase implements IDrawable {
     })
   }
   pushRenderer(renderer: Canvas2dRenderer) {
-    renderer.pushRenderList(this);
+    this.map.forEach(sec => {
+      sec.pushRenderer(renderer);
+    })
   }
 
   public testObjectCollision(object: any, isJustTest: boolean) {
