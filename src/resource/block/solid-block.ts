@@ -1,5 +1,7 @@
 import { BlockBase } from "./block-base";
 import { Canvas2dRenderer } from "../../renderer/canvas2d-renderer";
+import { IDrawable } from "../../interface/IDrawable";
+import { Block } from "../../world/block";
 
 export class SolidBlock extends BlockBase {
   constructor(name: string, option: any) {
@@ -19,6 +21,31 @@ export class SolidBlock extends BlockBase {
     } else {
       renderer.fillRect(this.color, x, y, this.blockWidth, this.blockWidth)
       renderer.fillRect(this.darkerColor, x, y + this.blockWidth, this.blockWidth, this.renderHeight)
+    }
+  }
+
+  drawW(item: Block) {
+    const renderer = item.game.renderer;
+    if (item.state.isPassingBy) {
+
+      renderer.fillRectFromWorld(this.activeColor,
+        item.worldX, item.worldY, item.worldZ,
+        this.blockWidth, this.blockWidth)
+
+      renderer.fillRectFromWorld(this.darkerColor,
+        item.worldX, item.worldY + this.blockWidth, item.worldZ,
+        this.blockWidth, this.renderHeight)
+
+    } else {
+
+      renderer.fillRectFromWorld(this.color,
+        item.worldX, item.worldY, item.worldZ,
+        this.blockWidth, this.blockWidth)
+
+      renderer.fillRectFromWorld(this.darkerColor,
+        item.worldX, item.worldY + this.blockWidth, item.worldZ,
+        this.blockWidth, this.renderHeight)
+
     }
   }
 }

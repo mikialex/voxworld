@@ -66,11 +66,11 @@ export class Player extends ReactiveBase {
 
   static vPrimary = 5;
   static vPrimarySquare = 25;
-  worldX = 40;
-  worldY = 20;
+  worldX = 0;
+  worldY = 0;
   worldZ = 1;
-  oldx = 40;
-  oldy = 20;
+  oldx = 0;
+  oldy = 0;
   vx = 0;
   vy = 0;
 
@@ -160,15 +160,8 @@ export class Player extends ReactiveBase {
     this.game.renderer.fillCircleFromWorld('#f55', this.worldX, this.worldY, this.worldZ, 6);
   }
 
-  get renderIndex() {
-    return 1
-  }
-  pushRenderer(renderer: Canvas2dRenderer, worldX: number, worldY: number) {
-    renderer.pushRenderList({
-      renderIndex: this.renderIndex,
-      renderCallBack: this.drawW()
-    })
-
+  pushRenderer(renderer: Canvas2dRenderer) {
+    renderer.pushRenderList(this);
   }
 
 

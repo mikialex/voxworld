@@ -15,6 +15,10 @@ export class World extends ReactiveBase implements IDrawable {
   resource: VoxResource;
   screenx: number;
   screeny: number;
+  worldX = 0;
+  worldY = 0;
+  worldZ = 0;
+
 
   constructor(game: VoxGame, resource: VoxResource) {
     super(game);
@@ -35,6 +39,14 @@ export class World extends ReactiveBase implements IDrawable {
     this.map.forEach(sec => {
       sec.draw(renderer, x + sec.worldIndexX * sectorWidth, y + sec.worldIndexY * sectorWidth);
     })
+  }
+  drawW() {
+    this.map.forEach(sec => {
+      sec.drawW();
+    })
+  }
+  pushRenderer(renderer: Canvas2dRenderer) {
+    renderer.pushRenderList(this);
   }
 
   public testObjectCollision(object: any, isJustTest: boolean) {

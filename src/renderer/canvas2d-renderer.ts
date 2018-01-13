@@ -3,7 +3,7 @@ import { VoxResource } from "../resource/resource-manage";
 import { Camera } from '../camera/camera';
 
 interface renderTask {
-  renderIndex: number;
+  item: any;
   renderCallBack: any;
 }
 
@@ -32,7 +32,7 @@ export class Canvas2dRenderer implements IRenderable {
   }
 
   private renderList: any = []
-  pushRenderList(task: renderTask) {
+  pushRenderList(task: any) {
 
   }
 
@@ -93,6 +93,14 @@ export class Canvas2dRenderer implements IRenderable {
       this.ctx.fillStyle = color;
       this.ctx.fillRect(x, y, width, height)
     }
+  }
+  fillRectFromWorld(color: string, worldX: number, worldY: number, worldZ: number,
+    width: number, height: number) {
+    this.fillRect(color,
+      this.camera.screenSpaceXTranstorm(worldX),
+      this.camera.screenSpaceYTranstorm(worldY, worldZ),
+      width, height
+    )
   }
 
   fillCircle(color: string, screenX: number, screenY: number, r: number) {

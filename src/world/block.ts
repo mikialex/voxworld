@@ -51,6 +51,7 @@ export class Block extends ReactiveBase implements IDrawable {
   sectorIndexY: number;
   worldX: number;
   worldY: number;
+  worldZ = 1;
 
   get boundSquare() {
     return {
@@ -106,6 +107,17 @@ export class Block extends ReactiveBase implements IDrawable {
       this.resource.blockCollection.collection[this.type]
         .draw(renderer, x, y, this.state);
     }
+  }
+
+  drawW() {
+    if (this.type !== 0) {
+      this.resource.blockCollection.collection[this.type]
+        .drawW(this);
+    }
+  }
+
+  pushRenderer(renderer: Canvas2dRenderer) {
+    renderer.pushRenderList(this);
   }
 
   pointTest(x: number, y: number) {

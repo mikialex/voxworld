@@ -9,4 +9,12 @@ export interface IDrawable {
     * @param screenY    The y coordinate of where to draw
     */
   draw(renderer: Canvas2dRenderer, screenX: number, screenY: number, resource?: VoxResource): void;
+
+  drawW(): void;
+
+  pushRenderer(renderer: Canvas2dRenderer): void;
+
+  worldX: number;
+  worldY: number;
+  worldZ: number;
 }

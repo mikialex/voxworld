@@ -34,6 +34,7 @@ export class Sector extends ReactiveBase implements IDrawable {
   worldIndexY: number;
   worldX: number;
   worldY: number;
+  worldZ = 1;
   screenx: number;
   screeny: number;
   // map: Array<Array<Array<number>>>;
@@ -67,8 +68,16 @@ export class Sector extends ReactiveBase implements IDrawable {
       }
     }
   }
-
-
+  drawW() {
+    for (let i = 0; i < sectorCount; i++) {
+      for (let j = 0; j < sectorCount; j++) {
+        this.map[i][j].drawW();
+      }
+    }
+  }
+  pushRenderer(renderer: Canvas2dRenderer) {
+    renderer.pushRenderList(this);
+  }
 
   pointTest(x: number, y: number) {
     return x >= this.screenx && x < (this.screenx + sectorWidth) && y >= this.screeny && y < (this.screeny + sectorWidth)
