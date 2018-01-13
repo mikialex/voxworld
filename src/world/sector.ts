@@ -34,7 +34,7 @@ export class Sector extends ReactiveBase implements IDrawable {
   worldIndexY: number;
   worldX: number;
   worldY: number;
-  worldZ = 1;
+  worldZ = 0;
   screenx: number;
   screeny: number;
   // map: Array<Array<Array<number>>>;
@@ -107,5 +107,7 @@ export class Sector extends ReactiveBase implements IDrawable {
     renderer.drawLine(color, x + sectorWidth, y + sectorWidth, x, y + sectorWidth)
   }
 
-
+  get boundSquare() {
+    return 0 //todo;
+  }
 }

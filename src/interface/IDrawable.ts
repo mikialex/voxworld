@@ -13,7 +13,7 @@ export interface IDrawable {
   drawW(): void;
 
   pushRenderer(renderer: Canvas2dRenderer): void;
-
+  boundSquare: any;
   worldX: number;
   worldY: number;
   worldZ: number;

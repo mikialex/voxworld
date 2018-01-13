@@ -1,6 +1,7 @@
 import { IRenderable } from '../interface/IRenderable'
 import { VoxResource } from "../resource/resource-manage";
 import { Camera } from '../camera/camera';
+import { IDrawable } from '../interface/IDrawable';
 
 interface renderTask {
   item: any;
@@ -31,9 +32,35 @@ export class Canvas2dRenderer implements IRenderable {
     console.log('rendering')
   }
 
-  private renderList: any = []
-  pushRenderList(task: any) {
-
+  private renderList: Array<IDrawable> = [];
+  public pushRenderList(task: IDrawable) {
+    this.renderList.push(task);
+  }
+  private reorderRenderList() {
+    this.renderList.sort((a: IDrawable, b: IDrawable) => {
+      const aFarest = a.boundSquare.leftTop.y;
+      const aNearest = a.boundSquare.leftBottom.y;
+      const bFarest = b.boundSquare.leftTop.y;
+      const bNearest = b.boundSquare.leftBottom.y;
+      if (aNearest <= bFarest) {
+        return -1;
+      } else if (bNearest <= aFarest) {
+        return 1;
+      } else {
+        if (a.worldZ <= b.worldZ) {
+          return -1
+        } else {
+          return 1
+        }
+      }
+    })
+  }
+  public drawRenderList() {
+    this.reorderRenderList();
+    this.renderList.forEach((task: IDrawable) => {
+      task.drawW();
+    });
+    this.renderList = [];
   }
 
 

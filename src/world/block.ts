@@ -51,7 +51,7 @@ export class Block extends ReactiveBase implements IDrawable {
   sectorIndexY: number;
   worldX: number;
   worldY: number;
-  worldZ = 1;
+  worldZ = 0;
 
   get boundSquare() {
     return {

@@ -85,4 +85,8 @@ export class World extends ReactiveBase implements IDrawable {
     renderer.drawLine('#444444', x, y, 1000, y);
     renderer.drawLine('#444444', x, y, x, 1000);
   }
+
+  get boundSquare() {
+    return 0 //todo;
+  }
 }

@@ -66,8 +66,8 @@ export class Player extends ReactiveBase {
 
   static vPrimary = 5;
   static vPrimarySquare = 25;
-  worldX = 0;
-  worldY = 0;
+  worldX = 130;
+  worldY = 190;
   worldZ = 1;
   oldx = 0;
   oldy = 0;

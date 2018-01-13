@@ -76,12 +76,17 @@ export class VoxGame extends ReactiveBase {
 
   draw() {
     this.renderer.clear();
-    this.world.drawW();
+    this.world.pushRenderer(this.renderer);
+    // this.world.drawW();
     // this.world.draw(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
+    // this.player.draw(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
+    // this.player.drawW();
+    this.player.pushRenderer(this.renderer);
+    this.renderer.drawRenderList();
+
     this.world.drawSectorBoundaries(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
     this.world.drawWorldAxis(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
-    // this.player.draw(this.renderer, this.camera.lookAtX, this.camera.lookAtY);
-    this.player.drawW();
+
     this.camera.lookAt(300 - this.player.worldX, 200 - this.player.worldY);
   }
 
